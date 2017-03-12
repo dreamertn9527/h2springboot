@@ -12,15 +12,15 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>组名称</th>
-        <th>组编码</th>
+        <th>书籍名称</th>
+        <th>书籍地址</th>
     </tr>
     </thead>
     <tbody>
 <#list userList as being>
     <tr>
-        <td>${being.GROUP_NAME}</td>
-        <td>${being.GROUP_ID}</td>
+        <td>${being.book_name}</td>
+        <td><a href="${being.book_path}">${being.book_path}</a></td>
     </tr>
 </#list>
     </tbody>

@@ -6,6 +6,7 @@ server:
           mime-types: text/html,text/css,text/javascript,application/javascript,image/gif,image/png,image/jpg
 spring:
   datasource:
+          name: test
           url: jdbc:mysql://127.0.0.1:3306/datadb
           username: root
           password: root
