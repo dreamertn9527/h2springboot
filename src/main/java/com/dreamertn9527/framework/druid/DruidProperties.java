@@ -1,4 +1,4 @@
-package com.dreamertn9527.platform.druid;
+package com.dreamertn9527.framework.druid;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @修改描述：
  * @modifier ${tags}
  */
-@ConfigurationProperties(prefix = "druid")
+@ConfigurationProperties(prefix = "spring.datasource")
 @Component
 public class DruidProperties {
     private String url;

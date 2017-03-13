@@ -1,4 +1,4 @@
-package com.dreamertn9527.platform.druid;
+package com.dreamertn9527.framework.druid;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.SQLException;
 
 /**
- * 类描述:
+ * 类描述:duid配置类
  *
  * @author:tangniannian
  * @date:2017/3/12
@@ -23,7 +23,7 @@ import java.sql.SQLException;
 @Configuration
 @EnableConfigurationProperties(DruidProperties.class)
 @ConditionalOnClass(DruidDataSource.class)
-@ConditionalOnProperty(prefix = "spring.datasource", name = "test")
+@ConditionalOnProperty(prefix = "spring.datasource", name = "url")
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 public class DruidAutoConfiguration {
 

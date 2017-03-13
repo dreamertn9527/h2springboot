@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 /**
- * 类描述:
+ * 类描述:分页插件
  *
  * @author:tangniannian
  * @date:2017/3/12
@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class PageHelperConfig {
 
-    @Bean
+    @Bean(name = "PageHelperConfig")
     public PageHelper pageHelper() {
         //分页插件
         PageHelper pageHelper = new PageHelper();
