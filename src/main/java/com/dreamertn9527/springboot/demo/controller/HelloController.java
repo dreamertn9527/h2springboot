@@ -1,9 +1,9 @@
-package com.dreamertn9527.demo.controller;
+package com.dreamertn9527.springboot.demo.controller;
 
-import com.dreamertn9527.demo.service.HelloMapper;
-import com.dreamertn9527.framework.aspect.annotation.PaginationController;
+import com.dreamertn9527.springboot.demo.service.HelloMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -24,8 +24,8 @@ public class HelloController {
     private HelloMapper helloMapper;
 
     @RequestMapping("/hello")
-    @PaginationController
-    public Map Hello(Map map){
+    public Map Hello(Map map, @RequestParam(value = "cardId", required = false) String cardId){
+
         map.put("userList", helloMapper.getListInfo(new HashMap()));
         return map;
     }
@@ -34,6 +34,4 @@ public class HelloController {
     public String index(){
         return "hello";
     }
-
-
 }

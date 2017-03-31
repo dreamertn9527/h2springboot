@@ -1,4 +1,4 @@
-package com.dreamertn9527.demo.service;
+package com.dreamertn9527.springboot.demo.service;
 
 import org.apache.ibatis.annotations.Mapper;
 

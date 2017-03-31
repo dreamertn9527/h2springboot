@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * 类描述:
+ * 类描述:读取druid的配置文件
  *
  * @author:tangniannian
  * @date:2017/3/12
