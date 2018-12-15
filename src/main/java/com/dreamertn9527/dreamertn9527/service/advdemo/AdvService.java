@@ -32,4 +32,8 @@ public interface AdvService {
      * @return
      */
     Boolean batchAddOrder(Long orderId, Set<String> set);
+
+    String find(String key);
+
+    String add(String k, String v);
 }

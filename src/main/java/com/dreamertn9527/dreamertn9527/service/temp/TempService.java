@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface TempService {
     List<TempPo> find();
+
+    TempPo findById(Long id);
 }

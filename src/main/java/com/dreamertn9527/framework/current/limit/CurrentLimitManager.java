@@ -15,11 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class CurrentLimitManager {
 
-    private static final Map<String, RateLimiter> limiterMap = new ConcurrentHashMap<>();
+    private static Map<String, RateLimiter> limiterMap = new ConcurrentHashMap<>();
 
     public RateLimiter getLimiter(String key, long limit){
-//        limiterMap.computeIfAbsent(new RateLimiter(limit))
-
-        return null;
+        return limiterMap.computeIfAbsent(key, s -> RateLimiter.create(limit));
     }
 }

@@ -2,10 +2,12 @@ package com.dreamertn9527.dreamertn9527.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dreamertn9527.dreamertn9527.domain.mysql.TempPo;
+import com.dreamertn9527.dreamertn9527.service.advdemo.AdvService;
 import com.dreamertn9527.dreamertn9527.service.temp.TempService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,58 +30,79 @@ public class TempController {
     @Autowired
     private TempService tempService;
 
-    @GetMapping("/find")
-    public String findAll(){
+    @Autowired
+    private AdvService advService;
+
+    @GetMapping("/find/{id}")
+    public String findById(@PathVariable Long id){
         Map<String, String> idMap = new TreeMap<>();
         Map<String, String> keyMap = new HashMap<>();
-        List<TempPo> list = tempService.find();
-        for(TempPo tempPo : list){
-            idMap.put(tempPo.getId()+"_"+tempPo.getKey(), tempPo.getId().toString());
-            keyMap.put(tempPo.getKey(), tempPo.getVal());
-        }
+        TempPo tempPo = tempService.findById(id);
+//        for(TempPo tempPo : list){
+//            idMap.put(tempPo.getId()+"_"+tempPo.getKey(), tempPo.getId().toString());
+//            keyMap.put(tempPo.getKey(), tempPo.getVal());
+//        }
+//
+//        int i = 0;
+//        String id = "";
+//        String key = "";
+//        String value = "";
+//        String tempId = "";
+//        Map<String, String> tempMap = new HashMap<>();
+//        Map<String, Map<String,String>> map = new HashMap<>();
+//        for(Map.Entry<String, String> entry : idMap.entrySet()){
+//            String idKey = entry.getKey();
+//            key = idKey.split("_")[1];
+//            value = keyMap.get(key);
+//            if(i == 0){
+//                id = idKey.split("_")[0];
+//                tempMap.put(key, value);
+//                i++;
+//                continue;
+//            }
+//
+//            tempId = entry.getValue();
+//            if(id.equals(tempId)){
+//                tempMap.put(key, value);
+//            } else {
+//                map.put(id, tempMap);
+//                tempMap = new HashMap<>();
+//                tempMap.put(key, value);
+//            }
+//            id = idKey.split("_")[0];
+//            i++;
+//
+//        }
+//
+//        if (id.equals(tempId)) {
+//            tempMap.put(key, value);
+//            map.put(id, tempMap);
+//        } else {
+//            map.put(id, tempMap);
+//        }
+//
+//        log.error("map size {}, map val {}", map.size(), JSON.toJSONString(map));
+//
+//        log.error("list size {}", list.size());
 
-        int i = 0;
-        String id = "";
-        String key = "";
-        String value = "";
-        String tempId = "";
-        Map<String, String> tempMap = new HashMap<>();
-        Map<String, Map<String,String>> map = new HashMap<>();
-        for(Map.Entry<String, String> entry : idMap.entrySet()){
-            String idKey = entry.getKey();
-            key = idKey.split("_")[1];
-            value = keyMap.get(key);
-            if(i == 0){
-                id = idKey.split("_")[0];
-                tempMap.put(key, value);
-                i++;
-                continue;
-            }
+        return JSON.toJSONString(tempPo);
+    }
 
-            tempId = entry.getValue();
-            if(id.equals(tempId)){
-                tempMap.put(key, value);
-            } else {
-                map.put(id, tempMap);
-                tempMap = new HashMap<>();
-                tempMap.put(key, value);
-            }
-            id = idKey.split("_")[0];
-            i++;
+    @GetMapping("/findAll")
+    public String findAll(){
+        List<TempPo> tempPos = tempService.find();
+        return JSON.toJSONString(tempPos);
+    }
 
-        }
+    @GetMapping("/add/{key}/{val}")
+    public Boolean add(@PathVariable String key, @PathVariable String val){
+        advService.add(key, val);
 
-        if (id.equals(tempId)) {
-            tempMap.put(key, value);
-            map.put(id, tempMap);
-        } else {
-            map.put(id, tempMap);
-        }
+        return Boolean.TRUE;
+    }
 
-        log.error("map size {}, map val {}", map.size(), JSON.toJSONString(map));
-
-        log.error("list size {}", list.size());
-
-        return JSON.toJSONString(list);
+    @GetMapping("/get/{key}")
+    public String get(@PathVariable String key){
+        return advService.find(key);
     }
 }

@@ -24,4 +24,9 @@ public class TempDaoImpl implements TempDao {
     public List<TempPo> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public TempPo findById(Long id) {
+        return repository.findOne(id);
+    }
 }

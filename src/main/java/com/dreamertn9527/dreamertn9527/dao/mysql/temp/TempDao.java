@@ -13,4 +13,6 @@ import java.util.List;
 public interface TempDao {
 
     List<TempPo> findAll();
+
+    TempPo findById(Long id);
 }
