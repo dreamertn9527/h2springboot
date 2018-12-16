@@ -2,7 +2,6 @@ package com.dreamertn9527.framework.aspects;
 
 import com.dreamertn9527.framework.annotation.Limit;
 import com.dreamertn9527.framework.current.limit.CurrentLimitManager;
-import com.dreamertn9527.framework.util.Assert;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 类描述:
@@ -45,11 +45,12 @@ public class LimitAspect {
         if(method.isAnnotationPresent(Limit.class)){
             Annotation annotation = method.getAnnotation(Limit.class);
             String key = joinPoint.getTarget().getClass().getName() + "#" + method.getName();
-            RateLimiter rateLimiter = currentLimitManager.getLimiter(key, ((Limit) annotation).value());
+            TimeUnit timeUnit = ((Limit) annotation).timeUnit();
+            RateLimiter rateLimiter = currentLimitManager.getLimiter(key, ((Limit) annotation).value(), timeUnit);
             if(rateLimiter.tryAcquire()){
                 retVal = joinPoint.proceed(joinPoint.getArgs());
             } else {
-                log.info("-------------调用限制------------");
+                log.error("-------------调用限制------------");
             }
         } else {
             retVal = joinPoint.proceed(joinPoint.getArgs());

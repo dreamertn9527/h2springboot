@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * 类描述:
@@ -17,7 +19,7 @@ public class CurrentLimitManager {
 
     private static Map<String, RateLimiter> limiterMap = new ConcurrentHashMap<>();
 
-    public RateLimiter getLimiter(String key, int limit){
-        return limiterMap.computeIfAbsent(key, s -> RateLimiter.create(limit));
+    public RateLimiter getLimiter(String key, int limit, TimeUnit timeUnit){
+        return limiterMap.computeIfAbsent(key, s -> RateLimiter.create(timeUnit.convert(limit, TimeUnit.SECONDS)));
     }
 }

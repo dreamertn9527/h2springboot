@@ -1,6 +1,7 @@
 package com.dreamertn9527.framework.annotation;
 
 import java.lang.annotation.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 类描述:
@@ -15,9 +16,5 @@ public @interface Limit {
 
     int value() default 0;
 
-    Model limitModel();
-
-    enum Model{
-        EVERY_SECOND
-    }
+    TimeUnit timeUnit();
 }

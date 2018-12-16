@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TempServiceImpl implements TempService {
@@ -16,13 +17,13 @@ public class TempServiceImpl implements TempService {
     private TempDao tempDao;
 
     @Override
-    @Limit(value = 120, limitModel = Limit.Model.EVERY_SECOND)
+    @Limit(value = 120, timeUnit = TimeUnit.SECONDS)
     public List<TempPo> find() {
         return tempDao.findAll();
     }
 
     @Override
-    @Limit(value = 130, limitModel = Limit.Model.EVERY_SECOND)
+    @Limit(value = 3000, timeUnit = TimeUnit.MINUTES)
     public TempPo findById(Long id) {
         return tempDao.findById(id);
     }
