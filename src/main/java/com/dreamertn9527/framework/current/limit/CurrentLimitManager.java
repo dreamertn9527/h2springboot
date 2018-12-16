@@ -17,7 +17,7 @@ public class CurrentLimitManager {
 
     private static Map<String, RateLimiter> limiterMap = new ConcurrentHashMap<>();
 
-    public RateLimiter getLimiter(String key, long limit){
+    public RateLimiter getLimiter(String key, int limit){
         return limiterMap.computeIfAbsent(key, s -> RateLimiter.create(limit));
     }
 }
