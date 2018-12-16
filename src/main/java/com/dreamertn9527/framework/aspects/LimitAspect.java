@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 类描述:
@@ -39,8 +37,6 @@ public class LimitAspect {
 
     }
 
-    private AtomicLong atomicLong = new AtomicLong(0);
-
     @Around(value = "pointCut()")
     public Object handleAround(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature joinPointObject = (MethodSignature) joinPoint.getSignature();
@@ -58,7 +54,7 @@ public class LimitAspect {
         } else {
             retVal = joinPoint.proceed(joinPoint.getArgs());
         }
-        Long a = atomicLong.addAndGet(1);
+
         return retVal;
     }
 }

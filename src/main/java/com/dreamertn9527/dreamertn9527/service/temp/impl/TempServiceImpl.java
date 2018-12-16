@@ -16,13 +16,13 @@ public class TempServiceImpl implements TempService {
     private TempDao tempDao;
 
     @Override
-    @Limit(120)
+    @Limit(value = 120, limitModel = Limit.Model.EVERY_SECOND)
     public List<TempPo> find() {
         return tempDao.findAll();
     }
 
     @Override
-    @Limit(130)
+    @Limit(value = 130, limitModel = Limit.Model.EVERY_SECOND)
     public TempPo findById(Long id) {
         return tempDao.findById(id);
     }

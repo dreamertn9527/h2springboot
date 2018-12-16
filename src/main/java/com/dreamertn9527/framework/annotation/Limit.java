@@ -13,5 +13,11 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 public @interface Limit {
 
-    long value() default 0L;
+    int value() default 0;
+
+    Model limitModel();
+
+    enum Model{
+        EVERY_SECOND
+    }
 }

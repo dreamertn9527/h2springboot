@@ -1,11 +1,8 @@
 package com.dreamertn9527.dreamertn9527.service.advdemo.impl;
 
 import com.dreamertn9527.dreamertn9527.service.advdemo.AdvService;
-import com.dreamertn9527.framework.annotation.Limit;
-import com.dreamertn9527.framework.annotation.LimitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.Set;
@@ -17,7 +14,6 @@ import java.util.Set;
  * @date 2018/12/10
  */
 @Service
-@LimitService
 public class AdvServiceImpl implements AdvService {
 
     @Autowired
@@ -42,7 +38,6 @@ public class AdvServiceImpl implements AdvService {
     }
 
     @Override
-    @Limit(1000)
     public String find(String key) {
         return jedis.getResource().get(key);
     }
