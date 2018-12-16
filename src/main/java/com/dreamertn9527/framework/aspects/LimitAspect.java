@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -39,26 +38,25 @@ public class LimitAspect {
 
     }
 
-    private AtomicLong atomicLong = new AtomicLong(0);
-
     @Around(value = "pointCut()")
     public Object handleAround(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature joinPointObject = (MethodSignature) joinPoint.getSignature();
         Method method = joinPointObject.getMethod();
         Object retVal = null;
         if(method.isAnnotationPresent(Limit.class)){
-            Annotation annotation = method.getAnnotation(Limit.class);
-            String key = joinPoint.getTarget().getClass().getName() + "#" + method.getName();
-            RateLimiter rateLimiter = currentLimitManager.getLimiter(key, ((Limit) annotation).value());
+            String key = joinPoint.getTarget().getClass().getName() + "#" + method.getName() + "-" +method.getParameterCount();
+            RateLimiter rateLimiter = currentLimitManager.getLimiter(key);
             if(rateLimiter.tryAcquire()){
                 retVal = joinPoint.proceed(joinPoint.getArgs());
             } else {
-                log.info("-------------调用限制------------");
+                log.error("-------------调用限制------------");
             }
         } else {
             retVal = joinPoint.proceed(joinPoint.getArgs());
         }
-        Long a = atomicLong.addAndGet(1);
+
         return retVal;
     }
+
+
 }

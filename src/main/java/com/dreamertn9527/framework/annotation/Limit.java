@@ -1,5 +1,7 @@
 package com.dreamertn9527.framework.annotation;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.*;
 
 /**
@@ -13,5 +15,12 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 public @interface Limit {
 
-    long value() default 0L;
+    long value();
+
+    Model limitUnit();
+
+    enum Model{
+        EVERY_MINUTE,
+        EVERY_SECOND
+    }
 }

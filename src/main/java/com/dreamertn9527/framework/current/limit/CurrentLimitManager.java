@@ -20,4 +20,8 @@ public class CurrentLimitManager {
     public RateLimiter getLimiter(String key, long limit){
         return limiterMap.computeIfAbsent(key, s -> RateLimiter.create(limit));
     }
+
+    public RateLimiter getLimiter(String key){
+        return limiterMap.get(key);
+    }
 }
