@@ -22,4 +22,11 @@ public class GiftActivityDaoImpl implements GiftActivityDao {
     public GiftActivityPo findById(Long id) {
         return giftActivityRepository.findById(id);
     }
+
+    @Override
+    public Long save(GiftActivityPo giftActivityPo){
+        giftActivityRepository.save(giftActivityPo);
+
+        return giftActivityPo.getId();
+    }
 }

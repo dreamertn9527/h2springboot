@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 类描述:
+ * 类描述: 限流
  *
  * @author:tangniannian
  * @date:2018/12/15

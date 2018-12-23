@@ -11,4 +11,6 @@ import com.dreamertn9527.dreamertn9527.domain.mysql.GiftActivityPo;
 public interface GiftActivityDao {
 
     GiftActivityPo findById(Long id);
+
+    Long save(GiftActivityPo giftActivityPo);
 }

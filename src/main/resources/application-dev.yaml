@@ -11,8 +11,8 @@ spring:
           password: root
           type: com.alibaba.druid.pool.DruidDataSource
           driver-class-name: com.mysql.cj.jdbc.Driver
-          initial-size: 30
-          max-active: 5000
+          initial-size: 10
+          max-active: 50
           test-on-borrow: true
           min-idle: 5
           filters: stat,wall,log4j
