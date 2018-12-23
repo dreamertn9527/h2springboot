@@ -13,4 +13,6 @@ public interface GiftActivityDao {
     GiftActivityPo findById(Long id);
 
     Long save(GiftActivityPo giftActivityPo);
+
+    Boolean delete(Long id);
 }

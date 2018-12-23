@@ -14,5 +14,7 @@ public interface GiftActivityCacheDao {
 
     GiftActivityPo findCacheById(Long id);
 
+    Long save(GiftActivityPo giftActivityPo);
 
+    Long saveOther(GiftActivityPo giftActivityPo);
 }

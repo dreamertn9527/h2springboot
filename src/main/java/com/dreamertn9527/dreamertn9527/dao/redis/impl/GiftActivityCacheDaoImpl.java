@@ -8,18 +8,14 @@ import com.dreamertn9527.framework.util.BeanUtil;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.sun.jmx.snmp.tasks.ThreadService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
-import sun.nio.ch.ThreadPool;
 
-import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -98,5 +94,37 @@ public class GiftActivityCacheDaoImpl implements GiftActivityCacheDao {
         }
 
         return giftActivityPo;
+    }
+
+    @Override
+    public Long save(GiftActivityPo giftActivityPo) {
+        Long id = giftActivityDao.save(giftActivityPo);
+        try {
+            jedisPool.getResource().set(GIFT_PREFIX + id, JSON.toJSONString(giftActivityPo));
+        } catch (Exception e) {
+            try {
+                giftActivityDao.delete(id);
+            } catch (Exception e1) {
+                // sendMessage
+            }
+            throw new RuntimeException("保存失败！");
+        }
+
+        return id;
+    }
+
+    @Override
+    @Transactional
+    public Long saveOther(GiftActivityPo giftActivityPo) {
+        giftActivityPo.setStatus(1);
+
+        Long id = giftActivityDao.save(giftActivityPo);
+
+        jedisPool.getResource().set(GIFT_PREFIX + id, JSON.toJSONString(giftActivityPo));
+
+        // update
+        giftActivityPo.setStatus(2);
+
+        return id;
     }
 }

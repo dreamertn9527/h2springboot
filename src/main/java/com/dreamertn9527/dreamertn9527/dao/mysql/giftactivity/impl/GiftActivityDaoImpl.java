@@ -29,4 +29,11 @@ public class GiftActivityDaoImpl implements GiftActivityDao {
 
         return giftActivityPo.getId();
     }
+
+    @Override
+    public Boolean delete(Long id) {
+         giftActivityRepository.delete(id);
+
+        return Boolean.TRUE;
+    }
 }
