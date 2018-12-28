@@ -1,0 +1,21 @@
+[{
+	"id": 1,
+	"name": "admin",
+	"desc": "超级管理员"
+},
+	{
+		"id": 2,
+		"name": "sysAdmin",
+		"desc": "系统管理员"
+	},
+	{
+		"id": 3,
+		"name": "resAdmin",
+		"desc": "资源位管理员"
+	},
+	{
+		"id": 4,
+		"name": "picAdmin",
+		"desc": "素材管理员"
+	}
+]

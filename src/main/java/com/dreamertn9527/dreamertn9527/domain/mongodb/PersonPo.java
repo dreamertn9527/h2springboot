@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.util.List;
 
 /**
  * 类描述:
@@ -22,4 +23,6 @@ public class PersonPo {
     private Integer age;
 
     private String address;
+
+    private List<Demo> demoList;
 }

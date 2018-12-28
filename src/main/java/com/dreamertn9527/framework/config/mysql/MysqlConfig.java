@@ -3,6 +3,8 @@ package com.dreamertn9527.framework.config.mysql;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.dreamertn9527.framework.sequence.GeneralID;
+import com.dreamertn9527.framework.sequence.GeneralIDUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,6 +21,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 类描述:
@@ -124,5 +128,26 @@ public class MysqlConfig {
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Bean
+    public GeneralID getSequence(DataSource dataSource){
+        GeneralID generalID = new GeneralID();
+        generalID.setDataSource(dataSource);
+
+        return generalID;
+    }
+
+    @Bean
+    public GeneralIDUtil sequenceUtil(GeneralID generalID){
+        GeneralIDUtil generalIDUtil = new GeneralIDUtil();
+        generalIDUtil.setDefaultGeneralID(generalID);
+        Map<String, GeneralID> map = new HashMap<>();
+        map.put("a", generalID);
+        map.put("b", generalID);
+
+        generalIDUtil.setSequenceMap(map);
+
+        return generalIDUtil;
     }
 }

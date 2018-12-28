@@ -1,6 +1,5 @@
 package com.dreamertn9527.dreamertn9527.event;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -11,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Slf4j
-@Log4j
 public class EveryDayEvent implements ApplicationListener<ContextRefreshedEvent> {
 
     Map<String, String> map = new ConcurrentHashMap<>();
