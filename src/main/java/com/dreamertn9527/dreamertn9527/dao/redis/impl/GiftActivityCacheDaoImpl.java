@@ -53,23 +53,33 @@ public class GiftActivityCacheDaoImpl implements GiftActivityCacheDao {
      * 2. load()时，单线程阻塞
      * 3. 可以设置软应用
      */
+
+
     private final LoadingCache<Long, String> cache = CacheBuilder.newBuilder()
+            // guava最大值100
             .maximumSize(MAX_SIZE)
+            // guava 1分钟过期
             .refreshAfterWrite(TIME_OUT, TIME_UNIT)
             .build(new CacheLoader<Long, String>() {
+         // 单线程阻塞load
         @Override
         public String load(Long id) throws Exception {
             String key = GIFT_PREFIX + id;
+            // 从缓存获取
             String cache = jedisPool.getResource().get(key);
             if(StringUtils.isEmpty(cache)){
+                // 回源数据库
                 GiftActivityPo giftActivityPo = giftActivityDao.findById(id);
                 if(giftActivityPo != null){
                     cache = JSON.toJSONString(giftActivityPo);
                 } else {
+                    // 数据库没有设置默认值
                     cache = DEFAULT_GIFT;
                 }
+                // 设置缓存超时时间
                 jedisPool.getResource().setex(key, REDIS_TIME_OUT, cache);
             }
+
 
             return cache;
         }
@@ -83,6 +93,12 @@ public class GiftActivityCacheDaoImpl implements GiftActivityCacheDao {
 
     @Override
     public GiftActivityPo findCacheById(Long id) {
+        // 一次redis查询2ms, 100 = 2*100=200ms
+        // 100个key一次批量查询，5ms
+        // keys: [k1, k2, k3]
+        // vals: [v1, nil, k3]
+        // venderId  + pin
+        // pin + venderId
         GiftActivityPo giftActivityPo = null;
         try {
             String str = cache.get(id);

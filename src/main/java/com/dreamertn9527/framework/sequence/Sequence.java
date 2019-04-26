@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GeneralID {
+public class Sequence {
 
     private int blockSize = 5;
 

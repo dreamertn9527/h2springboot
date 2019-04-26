@@ -3,8 +3,9 @@ package com.dreamertn9527.framework.config.mysql;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.dreamertn9527.framework.sequence.GeneralID;
-import com.dreamertn9527.framework.sequence.GeneralIDUtil;
+import com.dreamertn9527.framework.constant.SequenceEnum;
+import com.dreamertn9527.framework.sequence.Sequence;
+import com.dreamertn9527.framework.sequence.SequenceUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -131,23 +132,24 @@ public class MysqlConfig {
     }
 
     @Bean
-    public GeneralID getSequence(DataSource dataSource){
-        GeneralID generalID = new GeneralID();
-        generalID.setDataSource(dataSource);
+    public Sequence getSequence(DataSource dataSource){
+        Sequence sequence = new Sequence();
+        sequence.setDataSource(dataSource);
+        sequence.setBlockSize(10);
 
-        return generalID;
+        return sequence;
     }
 
     @Bean
-    public GeneralIDUtil sequenceUtil(GeneralID generalID){
-        GeneralIDUtil generalIDUtil = new GeneralIDUtil();
-        generalIDUtil.setDefaultGeneralID(generalID);
-        Map<String, GeneralID> map = new HashMap<>();
-        map.put("a", generalID);
-        map.put("b", generalID);
+    public SequenceUtil sequenceUtil(Sequence sequence){
+        SequenceUtil sequenceUtil = new SequenceUtil();
+        sequenceUtil.setDefaultSequence(sequence);
+        Map<String, Sequence> map = new HashMap<>();
+        for(SequenceEnum sequenceEnum : SequenceEnum.values()){
+            map.put(sequenceEnum.getKey(), sequence);
+        }
+        sequenceUtil.setSequenceMap(map);
 
-        generalIDUtil.setSequenceMap(map);
-
-        return generalIDUtil;
+        return sequenceUtil;
     }
 }

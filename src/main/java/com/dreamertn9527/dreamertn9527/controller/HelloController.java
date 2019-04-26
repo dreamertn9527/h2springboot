@@ -5,7 +5,7 @@ import com.dreamertn9527.dreamertn9527.dao.mongodb.PersonDao;
 import com.dreamertn9527.dreamertn9527.dao.mysql.giftactivity.GiftActivityDao;
 import com.dreamertn9527.dreamertn9527.domain.mongodb.Demo;
 import com.dreamertn9527.dreamertn9527.domain.mongodb.PersonPo;
-import com.dreamertn9527.framework.sequence.GeneralID;
+import com.dreamertn9527.framework.sequence.Sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +26,7 @@ public class HelloController {
     private PersonDao personDao;
 
     @Autowired
-    private GeneralID generalID;
+    private Sequence sequence;
 
     @GetMapping("/{id}")
     public String getById(@PathVariable Long id){
@@ -56,21 +56,21 @@ public class HelloController {
 
     @GetMapping("/a")
     public String a(){
-        return generalID.get("a")+"";
+        return sequence.get("a")+"";
     }
 
     @GetMapping("/b")
     public String b(){
-        return generalID.get("b")+"";
+        return sequence.get("b")+"";
     }
 
     @GetMapping("/c")
     public String c(){
-        return generalID.get("c")+"";
+        return sequence.get("c")+"";
     }
 
     @GetMapping("/d")
     public String d(){
-        return generalID.get("d")+"";
+        return sequence.get("d")+"";
     }
 }
