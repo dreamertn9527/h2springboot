@@ -49,8 +49,6 @@ public class LimitAspect {
             RateLimiter rateLimiter = currentLimitManager.getLimiter(key, ((Limit) annotation).value(), timeUnit);
             if(rateLimiter.tryAcquire()){
                 retVal = joinPoint.proceed(joinPoint.getArgs());
-            } else {
-                log.error("-------------调用限制------------");
             }
         } else {
             retVal = joinPoint.proceed(joinPoint.getArgs());

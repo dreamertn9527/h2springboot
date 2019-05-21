@@ -26,6 +26,7 @@ public class RegistryEvent implements ApplicationListener<ContextRefreshedEvent>
         String ip = NetUtils.getLocalHost();
         String id = contextRefreshedEvent.getApplicationContext().getId();
         String uniqueKey = ip + "_" + id;
-        jedis.hset(LIMITER_IP_ADR, uniqueKey, ip);
+        String key = LIMITER_IP_ADR + id;
+        jedis.hset(key, uniqueKey, ip);
     }
 }

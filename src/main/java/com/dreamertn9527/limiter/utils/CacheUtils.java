@@ -16,5 +16,5 @@ public class CacheUtils {
 
     public static Map<String, String> ipMap = new ConcurrentHashMap<>();
 
-    public static AtomicInteger atomicInteger = new AtomicInteger(0);
+    public static AtomicInteger atomicInteger = new AtomicInteger(1);
 }

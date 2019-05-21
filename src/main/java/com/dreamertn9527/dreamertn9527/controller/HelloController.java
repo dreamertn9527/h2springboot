@@ -6,6 +6,7 @@ import com.dreamertn9527.dreamertn9527.dao.mysql.giftactivity.GiftActivityDao;
 import com.dreamertn9527.dreamertn9527.domain.mongodb.Demo;
 import com.dreamertn9527.dreamertn9527.domain.mongodb.PersonPo;
 import com.dreamertn9527.framework.sequence.Sequence;
+import com.dreamertn9527.limiter.annotation.Limit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/gift")
@@ -29,6 +31,7 @@ public class HelloController {
     private Sequence sequence;
 
     @GetMapping("/{id}")
+    @Limit(value = 10000, timeUnit = TimeUnit.MICROSECONDS)
     public String getById(@PathVariable Long id){
         return JSON.toJSONString(giftActivityDao.findById(id));
     }
@@ -50,6 +53,7 @@ public class HelloController {
     }
 
     @GetMapping("/find/{id}")
+    @Limit(value = 500, timeUnit = TimeUnit.SECONDS, msg = "获取参数异常")
     public String find(@PathVariable Long id) {
         return JSON.toJSONString(personDao.findById(id));
     }

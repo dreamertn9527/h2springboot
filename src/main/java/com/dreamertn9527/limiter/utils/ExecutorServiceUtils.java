@@ -100,4 +100,13 @@ public class ExecutorServiceUtils {
     public static Future<?> submit(Callable callable) {
         return EXEC.submit(callable);
     }
+
+    public static void main(String[] args) {
+        EXEC.execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpRequest.sendGet("http://127.0.0.1:8081/gift/1", "");
+            }
+        });
+    }
 }

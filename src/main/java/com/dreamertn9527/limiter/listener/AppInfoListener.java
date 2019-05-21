@@ -1,6 +1,5 @@
 package com.dreamertn9527.limiter.listener;
 
-
 import com.dreamertn9527.limiter.utils.CacheUtils;
 import com.dreamertn9527.limiter.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class AppInfoListener{
     @Autowired
     private JedisPool jedisPool;
 
-    @Scheduled(cron = "0/2 * * * * ?")
+    @Scheduled(cron = "0/3 * * * * ?")
     public void init(){
         Jedis jedis = jedisPool.getResource();
         Long appNums = jedis.hlen(Constants.LIMITER_IP_ADR);
