@@ -19,7 +19,7 @@ public class AppInfoListener{
     @Autowired
     private JedisPool jedisPool;
 
-    @Scheduled(cron = "0/3 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void init(){
         Jedis jedis = jedisPool.getResource();
         Long appNums = jedis.hlen(Constants.LIMITER_IP_ADR);
