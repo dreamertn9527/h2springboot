@@ -1,5 +1,7 @@
 package com.dreamertn9527.limiter.utils;
 
+import com.google.common.util.concurrent.RateLimiter;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class CacheUtils {
 
-    public static Map<String, String> ipMap = new ConcurrentHashMap<>();
+    public static Map<String, RateLimiter> limiterMap = new ConcurrentHashMap<>();
 
     public static AtomicInteger atomicInteger = new AtomicInteger(1);
 }

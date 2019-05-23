@@ -2,7 +2,7 @@ server:
   tomcat:
     max-threads: 500
     max-connections: 5000
-  port: 8081
+  port: 8082
   compression:
           min-response-size: 512
           enabled: true
@@ -29,7 +29,7 @@ spring:
       max-wait: 100
       max-idle: 10000
       min-idle: 500
-    timeout: 10
+    timeout: 1000
   freemarker:
     suffix: .ftl
     charset: UTF-8
